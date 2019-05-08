@@ -7,6 +7,7 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
@@ -30,6 +31,8 @@ public class Main extends Application {
         scene.setFill(Color.BLACK);
         primaryStage.setScene(scene);
         primaryStage.show();
+        Image imagecur = new Image("file:///C:/Users/HP/eclipse-workspace/FruitNinja/src/Assets/blade.png");
+    	scene.setCursor(new ImageCursor(imagecur));
         Image myimg = new Image ("Assets/ic_launcher.png");
         Fruit strawberry = new Fruit ();
         strawberry.setImage(myimg);
@@ -55,10 +58,13 @@ public class Main extends Application {
                 cursor.setCenterY(event.getSceneY());
                 
                 if (cursor.getBoundsInParent().intersects(strawberry.circle.getBoundsInParent())) {
-                    System.out.println("Hi");
-                    group.getChildren().remove(strawberry);
-                    
-
+                    group.getChildren().remove(strawberry.circle);
+                }
+                if (cursor.getBoundsInParent().intersects(apple.circle.getBoundsInParent())) {
+                    group.getChildren().remove(apple.circle);
+                }
+                if (cursor.getBoundsInParent().intersects(grape.circle.getBoundsInParent())) {
+                    group.getChildren().remove(grape.circle);
                 }
               
             }

@@ -106,7 +106,7 @@ public void setImage(Image image) {
 public void move () {
 	if(this.start_x<350) {
     final Timeline timeline = new Timeline();
-    // timeline.setCycleCount(Timeline.INDEFINITE);
+     timeline.setCycleCount(Timeline.INDEFINITE);
      timeline.setAutoReverse(false);
      KeyValue xKV = new KeyValue(this.circle.centerXProperty(), this.end_x);
      KeyValue yKV = new KeyValue(this.circle.centerYProperty(), this.end_y, new Interpolator() {
@@ -127,7 +127,7 @@ public void move () {
 else 
 {
 	final Timeline timeline = new Timeline();
-    // timeline.setCycleCount(Timeline.INDEFINITE);
+  timeline.setCycleCount(Timeline.INDEFINITE);
      timeline.setAutoReverse(false);
      KeyValue xKV = new KeyValue(this.circle.centerXProperty(), this.end_x-400);
      KeyValue yKV = new KeyValue(this.circle.centerYProperty(), this.end_y, new Interpolator() {
