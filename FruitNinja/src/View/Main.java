@@ -30,85 +30,44 @@ public class Main extends Application {
         scene.setFill(Color.BLACK);
         primaryStage.setScene(scene);
         primaryStage.show();
-        Circle c = new Circle(500, 300, 16, Color.AQUA);
-        Circle c1 = new Circle(100, 300, 16, Color.AQUA);
-
+        Image myimg = new Image ("Assets/ic_launcher.png");
+        Fruit strawberry = new Fruit ();
+        strawberry.setImage(myimg);
+        
+        Image appleimg = new Image ("file:///C:/Users/HP/eclipse-workspace/FruitNinja/src/Assets/apple.png");
+        Fruit apple = new Fruit ();
+        apple.setImage(appleimg);
+        
+        Image grapeimg = new Image ("file:///C:/Users/HP/eclipse-workspace/FruitNinja/src/Assets/grape.png");
+        Fruit grape = new Fruit ();
+        grape.setImage(grapeimg);
+        System.out.println("straw start is "+strawberry.getEnd_y()+"\n"+ "apple is "+ apple.getEnd_y());
         Circle cursor = new Circle(1,1,1,Color.GREEN);
 
-
+        strawberry.move();
+        apple.move();
+        grape.move();
+        
         scene.setOnMouseDragged( new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event) {
                 cursor.setCenterX(event.getSceneX());
                 cursor.setCenterY(event.getSceneY());
-
-
-                if (cursor.getBoundsInParent().intersects(c.getBoundsInParent())) {
+                
+                if (cursor.getBoundsInParent().intersects(strawberry.circle.getBoundsInParent())) {
                     System.out.println("Hi");
-                    group.getChildren().remove(c);
+                    group.getChildren().remove(strawberry);
+                    
 
                 }
-                if (cursor.getBoundsInParent().intersects(c1.getBoundsInParent())) {
-                    System.out.println("Hi");
-                    group.getChildren().remove(c1);
-
-                }
+              
             }
         });
 
         Line l = new Line(100, 300, 500, 300);
         l.setStroke(Color.AQUA);
-        group.getChildren().addAll(c1,c, l,cursor);
-        final Timeline timeline = new Timeline();
-       // timeline.setCycleCount(Timeline.INDEFINITE);
-        c1.setFill(new ImagePattern(new Image("Assets/ic_launcher.png")));
-        timeline.setAutoReverse(false);
-        Image image = new Image("Assets/ic_launcher.png");
-        c.setFill(new ImagePattern(image));
-        KeyValue xKV = new KeyValue(c.centerXProperty(), 100);
-        KeyValue yKV = new KeyValue(c.centerYProperty(), 100, new Interpolator() {
-            @Override
-            protected double curve(double t) {
-                System.out.println("circle centerx " + c.getCenterX());
-                System.out.println("circle center y " + c.getCenterY());
-               // System.out.println("line endy"  + l.getEndY());
-              //  System.out.println("line end x " + l.getEndX());
-                if(c.getCenterY() >= 290){
-                    nums++;
-                    System.out.println(nums);
-                    if(c.getCenterX() < 200) {
-                        group.getChildren().remove(c);
-                    }
-                }
-                return -4 * (t - .5) * (t - .5) + 1;
-
-            }
-        });
-        KeyValue xKV1 = new KeyValue(c1.centerXProperty(), 500);
-        KeyValue yKV2 = new KeyValue(c1.centerYProperty(), 200, new Interpolator() {
-            @Override
-            protected double curve(double t) {
-                // System.out.println("line endy"  + l.getEndY());
-                //  System.out.println("line end x " + l.getEndX());
-                if(c1.getCenterY() >= 290){
-                    nums++;
-                    System.out.println(nums);
-                    if(c1.getCenterX() > 290) {
-                        group.getChildren().remove(c1);
-                    }
-                }
-                return -4 * (t - .5) * (t - .5) + 1;
-
-            }
-        });
-        KeyFrame xKF = new KeyFrame(Duration.millis(20000), xKV);
-        KeyFrame yKF = new KeyFrame(Duration.millis(20000), yKV);
-        timeline.getKeyFrames().addAll(xKF, yKF);
-        KeyFrame xKF1 = new KeyFrame(Duration.millis(20000), xKV1);
-        KeyFrame yKF1 = new KeyFrame(Duration.millis(20000), yKV2);
-        timeline.getKeyFrames().addAll(xKF1, yKF1);
-        timeline.play();
-    }
+        group.getChildren().addAll(strawberry.circle,apple.circle,l,cursor,grape.circle);
+        }
 
     public static void main(String[] args) {
         launch(args);
