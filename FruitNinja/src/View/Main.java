@@ -10,9 +10,11 @@ import javafx.scene.Group;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -23,56 +25,75 @@ import javafx.util.Duration;
 
 public class Main extends Application {
     int nums = 0;
+    int score =0;
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Test");
-        Group group = new Group();
+        Pane group = new Pane();
         Scene scene = new Scene(group, 600, 350);
         scene.setFill(Color.BLACK);
         primaryStage.setScene(scene);
         primaryStage.show();
         Image imagecur = new Image("file:///C:/Users/HP/eclipse-workspace/FruitNinja/src/Assets/blade.png");
     	scene.setCursor(new ImageCursor(imagecur));
-        Image myimg = new Image ("Assets/ic_launcher.png");
-        Fruit strawberry = new Fruit ();
-        strawberry.setImage(myimg);
-        
-        Image appleimg = new Image ("file:///C:/Users/HP/eclipse-workspace/FruitNinja/src/Assets/apple.png");
-        Fruit apple = new Fruit ();
-        apple.setImage(appleimg);
-        
-        Image grapeimg = new Image ("file:///C:/Users/HP/eclipse-workspace/FruitNinja/src/Assets/grape.png");
-        Fruit grape = new Fruit ();
-        grape.setImage(grapeimg);
-        System.out.println("straw start is "+strawberry.getEnd_y()+"\n"+ "apple is "+ apple.getEnd_y());
+    	
+    	Fruit [] fruits = new Fruit[15];
+    	 Image myimg = new Image ("Assets/ic_launcher.png");
+           
+         Image appleimg = new Image ("file:///C:/Users/HP/eclipse-workspace/FruitNinja/src/Assets/apple.png");
+   
+         
+         Image grapeimg = new Image ("file:///C:/Users/HP/eclipse-workspace/FruitNinja/src/Assets/grape.png");
+        Label scorelbl = new Label();
+         scorelbl.setText("your score is  :  "+score) ; 
+         group.getChildren().add(0, scorelbl);
+         Line l = new Line(100, 300, 500, 300);
+         l.setStroke(Color.AQUA);
+         int i=0;
+    	for( i=0;i<fruits.length;i++) {
+        		fruits[i]=new Fruit();
+        		fruits[i].setImage(myimg);
+        		i++;
+        		fruits[i]=new Fruit();
+        		fruits[i].setImage(appleimg);
+        		i++;
+        		fruits[i]=new Fruit();
+        		fruits[i].setImage(grapeimg);
+        		}
+    	
+    	
+    	for( i=0;i<fruits.length;i++) {
+    		fruits[i].move();            
+    	}
         Circle cursor = new Circle(1,1,1,Color.GREEN);
+        group.getChildren().addAll(l,cursor);
+    	for(i=0;i<fruits.length;i++) {
+    		System.out.println(i);
+        	group.getChildren().add(fruits[i].circle);
 
-        strawberry.move();
-        apple.move();
-        grape.move();
-        
+    	}
+    
+
+
         scene.setOnMouseDragged( new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event) {
                 cursor.setCenterX(event.getSceneX());
                 cursor.setCenterY(event.getSceneY());
-                
-                if (cursor.getBoundsInParent().intersects(strawberry.circle.getBoundsInParent())) {
-                    group.getChildren().remove(strawberry.circle);
+                for(int i=0;i<fruits.length;i++) {
+                if (cursor.getBoundsInParent().intersects(fruits[i].circle.getBoundsInParent())) {
+                    group.getChildren().remove(fruits[i].circle);
+                    fruits[i].circle.setDisable(true);
+                    score++;
+                    scorelbl.setText("your score is  :  "+score) ; 
+
                 }
-                if (cursor.getBoundsInParent().intersects(apple.circle.getBoundsInParent())) {
-                    group.getChildren().remove(apple.circle);
-                }
-                if (cursor.getBoundsInParent().intersects(grape.circle.getBoundsInParent())) {
-                    group.getChildren().remove(grape.circle);
                 }
               
             }
         });
 
-        Line l = new Line(100, 300, 500, 300);
-        l.setStroke(Color.AQUA);
-        group.getChildren().addAll(strawberry.circle,apple.circle,l,cursor,grape.circle);
+    
         }
 
     public static void main(String[] args) {
